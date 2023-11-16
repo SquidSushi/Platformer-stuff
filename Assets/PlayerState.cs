@@ -24,6 +24,7 @@ namespace PlayerStateMachine
         public abstract float HitboxUp();
         public abstract float HitboxFront();
         public abstract float HitboxBack();
+        public abstract String Name();
 
         public abstract bool Grounded();
         public virtual Vector2 CamOffset()
@@ -38,6 +39,7 @@ namespace PlayerStateMachine
             {
                 Debug.Log("Entering State" + this.GetType().Name);
             }
+            player.anim.Play(Name());
         }
         public virtual void OnExit()
         {
@@ -75,6 +77,10 @@ namespace PlayerStateMachine
             return player.numbers.StandingHitboxUp;
         }
 
+        public override string Name() {
+            return "Standing";
+        }
+
         public override bool Grounded() { return true;}
         public override PlayerState Update(PlayerController player)
         {
@@ -85,12 +91,45 @@ namespace PlayerStateMachine
                 //if ground, stay in state but move to ground
                 float move = HitboxDown() - hit.distance;
                 player.transform.position += new Vector3(0, move);
-                return this;
-            }
-            else
-            {
+            } else {
                 return new Falling(player);
             }
+
+            
+            //get movement input and return Running if not running into a wall
+            if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) {
+                player.facingLeft = true;
+                RaycastHit2D wallHit = Physics2D.Raycast(player.transform.position, Vector2.left, this.HitboxFront(), player.groundLayer);
+                if (wallHit.collider != null) {
+                    //if wall, stay in state but move to wall
+                    float move = HitboxFront() - wallHit.distance;
+                    player.transform.position += new Vector3(move, 0);
+                    return this;
+                } else {
+                    return new Running(player);
+                }
+                
+            }
+            if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A)) {
+                player.facingLeft = false;
+                RaycastHit2D wallHit = Physics2D.Raycast(player.transform.position, Vector2.right, this.HitboxFront(), player.groundLayer);
+                if (wallHit.collider != null) {
+                    //if wall, stay in state but move to wall
+                    float move = HitboxFront() - wallHit.distance;
+                    player.transform.position -= new Vector3(move, 0);
+                    return this;
+                } else {
+                    return new Running(player);
+                }
+            }
+
+            return this;
+        }
+
+        public override void OnEnter() {
+            base.OnEnter();
+            player.vel.y = 0;
+            player.vel.x = 0;
         }
     }
 
@@ -99,6 +138,10 @@ namespace PlayerStateMachine
         public Falling(PlayerController player) : base(player)
         {
             
+        }
+
+        public override string Name() {
+            return "Falling";
         }
         public override bool Grounded() { return false;}
 
@@ -127,14 +170,32 @@ namespace PlayerStateMachine
             player.vel.y -= player.numbers.DefaultGravity * Time.deltaTime;
             player.vel.y = Mathf.Max(player.vel.y, -player.numbers.MaxFallSpeed);
             player.transform.Translate(player.vel * Time.deltaTime);
+            //Raycast for walls and push away from them
+            RaycastHit2D hit = Physics2D.Raycast(player.transform.position, player.FrontVec(), this.HitboxFront(), player.groundLayer);
+            if (hit.collider != null) {
+                float move = HitboxFront() - hit.distance;
+                if (player.facingLeft) {
+                    player.transform.position += new Vector3(move, 0);
+                } else {
+                    player.transform.position -= new Vector3(move, 0);
+                }
+                player.vel.x = 0;
+            }
+            hit = Physics2D.Raycast(player.transform.position, -player.FrontVec(), this.HitboxBack(), player.groundLayer);
+            if (hit.collider != null) {
+                float move = HitboxBack() - hit.distance;
+                player.transform.position += new Vector3(move * -player.FrontVec().x, 0);
+                player.vel.x = 0;
+            }
+
             //check for Ground
-            RaycastHit2D hit = Physics2D.Raycast(player.transform.position, Vector2.down, this.HitboxDown(), player.groundLayer);
+            hit = Physics2D.Raycast(player.transform.position, Vector2.down, this.HitboxDown(), player.groundLayer);
             if (hit.collider != null)
             {
                 //if ground, move to ground and return standing
                 float move = HitboxDown() - hit.distance;
                 player.transform.position += new Vector3(0, move);
-                return new Standing(player);
+                return new Running(player);
             }
             else
             {
@@ -145,9 +206,18 @@ namespace PlayerStateMachine
 
     public class Running: PlayerState
     {
-        Running(PlayerController player) : base(player)
+        public Running(PlayerController player) : base(player)
         {
             
+        }
+
+        public override void OnEnter() {
+            base.OnEnter();
+            player.vel.y = 0;
+        }
+
+        public override string Name() {
+            return "Running";
         }
 
         public override bool Grounded(){return true;}
@@ -175,8 +245,9 @@ namespace PlayerStateMachine
         public override PlayerState Update(PlayerController player)
         {
             //if neither a or d are pressed, return standing
-            if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && Math.Abs(player.vel.x) < player.numbers.StandThreshhold)
             {
+                player.vel.x = 0;
                 return new Standing(player);
             }
             if (Input.GetKey(KeyCode.A))
@@ -187,8 +258,28 @@ namespace PlayerStateMachine
             {
                 player.vel.x += player.numbers.WalkAcceleration * Time.deltaTime;
             }
+            player.facingLeft = player.vel.x < 0;
+            //check for ground and move to ground
+            RaycastHit2D hit = Physics2D.Raycast(player.transform.position, Vector2.down, this.HitboxDown() + Mathf.Abs(player.vel.x * 2 * Time.deltaTime) + 1E-4f, player.groundLayer);
+            if (hit.collider != null) {
+                //if ground, stay in state but move to ground
+                float move = HitboxDown() - hit.distance;
+                player.transform.position += new Vector3(0, move);
+            } else {
+                return new Falling(player);
+            }
+            //check for wall and put Samus in a standing state
+            hit = Physics2D.Raycast(player.transform.position, player.FrontVec(), this.HitboxFront(), player.groundLayer);
+            if (hit.collider != null) {
+                //if wall, stay in state but move to wall
+                float move = HitboxFront() - hit.distance;
+                player.transform.position += new Vector3(move * player.FrontVec().x, 0);
+                player.vel.x = 0;
+                return new Standing(player);
+            }
+
             //multiply by deacceleration
-            player.vel.x *= player.numbers.WalkingDeacceleration;
+            player.vel.x *= Mathf.Pow(player.numbers.WalkingDeacceleration, Time.deltaTime);
             player.transform.Translate(player.vel * Time.deltaTime);
             return this;
         }

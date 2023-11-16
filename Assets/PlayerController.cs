@@ -13,11 +13,14 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;
     public LayerMask semiSolid;
     public PlayerState state;
-
+    public Animator anim;
+    public new SpriteRenderer renderer;
 
     private void Awake()
     {
         state = new Standing(this);
+        anim = GetComponent<Animator>();
+        renderer = GetComponent<SpriteRenderer>();
     }
     // Start is called before the first frame update
     void Start()
@@ -29,6 +32,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         state = state.Update(this);
+        renderer.flipX = facingLeft;
     }
     private void OnDrawGizmos()
     {
@@ -47,7 +51,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private Vector2 FrontVec()
+    public Vector2 FrontVec()
     {
         if (facingLeft)
         {

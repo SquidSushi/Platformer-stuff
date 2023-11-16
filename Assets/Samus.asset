@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ace9ab0db5d8ed64495eac3f9dc2e6ef, type: 3}
   m_Name: Samus
   m_EditorClassIdentifier: 
-  Debug: 0
+  Debug: 1
   StandingHitboxDown: 0.85
   StandingHitboxUp: 0.5
   StandingHitboxFront: 0.25
@@ -21,14 +21,16 @@ MonoBehaviour:
   CrouchingHitboxUp: 0.25
   CrouchingHitboxFront: 0.25
   CrouchingHitboxBack: 0.25
-  WalkAcceleration: 10
-  WalkingDeacceleration: 10
+  WalkAcceleration: 20
+  WalkingDeacceleration: 0.1
   TurnInstantSpeedFactor: -0.8
-  StepCheck: 3
+  StepCheck: 5
+  StandThreshhold: 1
   JumpImpulse: 10
   WallJumpImpulse: {x: 10, y: 10}
-  DefaultGravity: 1
+  DefaultGravity: 20
   MaxFallSpeed: 10
+  AirborneAcceleration: 10
   SpinHitboxDown: 0.35
   SpinHitboxUp: 0.35
   SpinHitboxFront: 0.25

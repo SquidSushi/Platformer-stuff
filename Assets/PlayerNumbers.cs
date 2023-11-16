@@ -27,11 +27,13 @@ namespace PlayerStateMachine
         public float WalkingDeacceleration = 10f;
         public float TurnInstantSpeedFactor = -0.8f; //mutliply x speed when turning
         public float StepCheck = 3f; //per second
+        public float StandThreshhold = 0.1f;
         [Header("Jumping and Airborne")]
         public float JumpImpulse = 10;
         public Vector2 WallJumpImpulse = new (10,10);
         public float DefaultGravity = 10f;
         public float MaxFallSpeed = 10f;
+        public float AirborneAcceleration = 10f;
         [Header("Spinning")]
         public float SpinHitboxDown = 0.35f;
         public float SpinHitboxUp = 0.35f;
