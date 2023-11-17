@@ -28,7 +28,7 @@ namespace PlayerStateMachine
         public float TurnInstantSpeedFactor = -0.8f; //mutliply x speed when turning
         public float StepCheck = 3f; //per second
         public float StandThreshhold = 0.1f;
-        [Header("Jumping and Airborne")]
+        [Header("Jumping and Airborne"), Tooltip("Inital YEET upon pressing Jump")]
         public float JumpImpulse = 10;
         public Vector2 WallJumpImpulse = new (10,10);
         public float DefaultGravity = 10f;
