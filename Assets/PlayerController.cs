@@ -14,15 +14,15 @@ public class PlayerController : MonoBehaviour {
     public LayerMask semiSolid;
     public PlayerState state;
     public Animator anim;
-    public new SpriteRenderer renderer;
+    private new SpriteRenderer renderer;
     [SerializeField]
-    public @Whatsthis Inputs;
+    public GameplayIAA Inputs;
 
     private void Awake() {
         state = new Standing(this);
         anim = GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>();
-        Inputs = new @Whatsthis();
+        Inputs = new GameplayIAA();
         Inputs.Enable();
     }
     // Start is called before the first frame update
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Inputs.Movement.Jump.IsPressed()){
+        if (Inputs.Movement.Jump.WasPressedThisFrame()){
             Debug.Log("Presso");
         }
         //state.Update(this);
