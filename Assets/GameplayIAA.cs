@@ -127,7 +127,7 @@ public partial class @GameplayIAA: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""38f78227-12b0-48b1-bdd1-16c41ec672cc"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
