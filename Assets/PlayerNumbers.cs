@@ -29,7 +29,10 @@ namespace PlayerStateMachine
         public float StepCheck = 3f; //per second
         public float StandThreshhold = 0.1f;
         [Header("Jumping and Airborne"), Tooltip("Inital YEET upon pressing Jump")]
-        public float JumpImpulse = 10;
+        public float JumpHeight = 3.25f;
+        public float JumpImpulse() {
+            return Mathf.Sqrt(2 * JumpHeight * DefaultGravity);
+        }
         public Vector2 WallJumpImpulse = new (10,10);
         public float DefaultGravity = 10f;
         public float MaxFallSpeed = 10f;

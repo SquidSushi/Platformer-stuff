@@ -26,7 +26,7 @@ MonoBehaviour:
   TurnInstantSpeedFactor: -0.8
   StepCheck: 5
   StandThreshhold: 1
-  JumpImpulse: 10
+  JumpHeight: 3.15
   WallJumpImpulse: {x: 10, y: 10}
   DefaultGravity: 20
   MaxFallSpeed: 10
