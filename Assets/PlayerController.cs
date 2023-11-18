@@ -32,9 +32,6 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Inputs.Movement.Jump.WasPressedThisFrame()){
-            Debug.Log("Presso");
-        }
         state.Update(this);
         if (vel.x != 0)
         {
@@ -53,6 +50,15 @@ public class PlayerController : MonoBehaviour {
         };
             Gizmos.color = Color.yellow;
             Gizmos.DrawLineStrip(diamondPoints, true);
+            Gizmos.color = Color.red;
+            //Draw a cube based on velocity
+            float lengthScale = 0.25f;
+            float thicknessScale = 1f/16f;
+            int lineResolution = 40;
+            for (int i = 0; i <= lineResolution; i++) {
+                Gizmos.DrawWireSphere(transform.position + new Vector3(vel.x,vel.y) * i / lineResolution * lengthScale, thicknessScale);
+            }
+            //Gizmos.DrawLine(transform.position, transform.position + new Vector3(vel.x * scale, vel.y * scale));
         }
     }
 

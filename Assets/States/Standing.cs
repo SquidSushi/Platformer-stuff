@@ -45,9 +45,10 @@ namespace PlayerStateMachine {
             {
                 player.state = new Running(player);
             }
-            if (Inputs.Jump.triggered)
+            if (Inputs.Jump.IsPressed())
             {
-                //player.state = new Jumping(player);
+                player.state = new Falling(player);
+                player.vel.y = player.numbers.JumpImpulse;
             }
             var hit = Physics2D.Linecast(player.transform.position, player.transform.position + new Vector3(0, -(HitboxDown())), player.groundLayer);
             if (hit.collider == null)
