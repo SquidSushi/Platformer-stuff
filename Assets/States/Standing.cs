@@ -32,12 +32,28 @@ namespace PlayerStateMachine {
 
         public override void OnEnter() {
             base.OnEnter();
-            player.vel.y = 0;
-            player.vel.x = 0;
+            player.vel = Vector2.zero;
         }
 
         public override void Motion() {
-            throw new System.NotImplementedException();
+            //Standing doesnt have motion nor any other effects to happen during it :)
+        }
+
+        public override void StateSwap()
+        {
+            if (Inputs.Walking.ReadValue<Vector2>().x != 0)
+            {
+                player.state = new Running(player);
+            }
+            if (Inputs.Jump.triggered)
+            {
+                //player.state = new Jumping(player);
+            }
+            var hit = Physics2D.Linecast(player.transform.position, player.transform.position + new Vector3(0, -(HitboxDown())), player.groundLayer);
+            if (hit.collider == null)
+            {
+                player.state = new Falling(player);
+            }
         }
     }
 }

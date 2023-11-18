@@ -19,11 +19,11 @@ public class PlayerController : MonoBehaviour {
     public GameplayIAA Inputs;
 
     private void Awake() {
-        state = new Standing(this);
         anim = GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>();
         Inputs = new GameplayIAA();
         Inputs.Enable();
+        state = new Standing(this);
     }
     // Start is called before the first frame update
     void Start() {
@@ -35,8 +35,11 @@ public class PlayerController : MonoBehaviour {
         if (Inputs.Movement.Jump.WasPressedThisFrame()){
             Debug.Log("Presso");
         }
-        //state.Update(this);
-        renderer.flipX = facingLeft;
+        state.Update(this);
+        if (vel.x != 0)
+        {
+            facingLeft = vel.x < 0;
+        }
     }
     private void OnDrawGizmos() {
         //only do in PlayMode

@@ -14,52 +14,48 @@ namespace PlayerStateMachine
         {
             this.player = player;
             this.StateAge = 0;
-            Inputs = player.Inputs;
+            Inputs = player.Inputs.Movement;
         }
         public PlayerController player;
-        public GameplayIAA Inputs;
+        public GameplayIAA.MovementActions Inputs;
         public float StateAge { get; protected set; }
 
         public void Update(PlayerController player) {
             this.StateAge += Time.deltaTime;
             Motion();
+            Physics2D.SyncTransforms();
             StateSwap();
             if (player.state != this) {
-                player.state.OnExit();
+                this.OnExit();
                 player.state.OnEnter();
             }
             player.state.GenericCollision();
+            Physics2D.SyncTransforms();
         }
 
         public abstract void Motion();
-        public void StateSwap() {
-            
-            
-        }
+        public abstract void StateSwap();
         public void GenericCollision() {
             //generic collision check and moving out of collision
             float distance = 0;
             if (TouchesGround(ref distance)) {
-                player.transform.position += new Vector3(0, distance);
-                //player.vel.y = 0;
+                player.transform.Translate(Vector3.up * (HitboxDown() - distance));
+
             }
             if (TouchesWallFront(ref distance)) {
-                player.transform.position += new Vector3(player.FrontVec().x * distance, 0);
-                //player.vel.x = 0;
+               player.transform.Translate(distance * new Vector3(-player.FrontVec().x, 0));
             }
             if (TouchesWallBack(ref distance)) {
-                player.transform.position += new Vector3(-player.FrontVec().x * distance, 0);
-                //player.vel.x = 0;
+                player.transform.Translate(distance * new Vector3(player.FrontVec().x, 0));
             }
             if (TouchesCeiling(ref distance)) {
-                player.transform.position += new Vector3(0, -distance);
-                //player.vel.y = 0;
+                player.transform.Translate(distance * new Vector3(0, -1));
             }
 
         }
 
         public bool TouchesGround(ref float outDistance) {
-            Vector2 origin = player.transform.position + new Vector3(0, -player.state.HitboxDown());
+            Vector2 origin = player.transform.position;
             Vector2 direction = new Vector2(0, -1);
             RaycastHit2D hit = Physics2D.Raycast(origin, direction, HitboxDown(), player.groundLayer);
             if (hit.collider != null) {
@@ -70,7 +66,7 @@ namespace PlayerStateMachine
         }
 
         public bool TouchesWallFront(ref float outDistance) {
-            Vector2 origin = player.transform.position + new Vector3(player.state.HitboxFront() * player.FrontVec().x, 0);
+            Vector2 origin = player.transform.position;
             Vector2 direction = new Vector2(player.FrontVec().x, 0);
             RaycastHit2D hit = Physics2D.Raycast(origin, direction, HitboxFront(), player.groundLayer);
             if (hit.collider != null) {
@@ -81,7 +77,7 @@ namespace PlayerStateMachine
         }
 
         public bool TouchesWallBack(ref float outDistance) {
-            Vector2 origin = player.transform.position + new Vector3(player.state.HitboxBack() * -player.FrontVec().x, 0);
+            Vector2 origin = player.transform.position;
             Vector2 direction = new Vector2(-player.FrontVec().x, 0);
             RaycastHit2D hit = Physics2D.Raycast(origin, direction, HitboxBack(), player.groundLayer);
             if (hit.collider != null) {
@@ -92,7 +88,7 @@ namespace PlayerStateMachine
         }
 
         public bool TouchesCeiling(ref float outDistance) {
-            Vector2 origin = player.transform.position + new Vector3(0, player.state.HitboxUp());
+            Vector2 origin = player.transform.position;
             Vector2 direction = new Vector2(0, 1);
             RaycastHit2D hit = Physics2D.Raycast(origin, direction, HitboxUp(), player.groundLayer);
             if (hit.collider != null) {

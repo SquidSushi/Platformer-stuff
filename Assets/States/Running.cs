@@ -37,5 +37,10 @@ namespace PlayerStateMachine {
         public override void Motion() {
             throw new System.NotImplementedException();
         }
+
+        public override void StateSwap()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -28,7 +28,19 @@ namespace PlayerStateMachine {
         }
 
         public override void Motion() {
-            throw new System.NotImplementedException();
+            //while falling, add gravity to the player velocity
+            player.vel -= new Vector2(0, player.numbers.DefaultGravity * Time.deltaTime);
+            player.transform.Translate(player.vel * Time.deltaTime);
+        }
+
+        public override void StateSwap()
+        {
+            //check if touches ground, then swap players state to a new standing
+            var hit = Physics2D.Linecast(player.transform.position, player.transform.position + new Vector3(0, -HitboxDown()), player.groundLayer);
+            if (hit.collider != null)
+            {
+                player.state = new Standing(player);
+            }
         }
     }
 }
