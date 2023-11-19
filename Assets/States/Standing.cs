@@ -7,19 +7,19 @@ namespace PlayerStateMachine {
         public Standing(PlayerController player) : base(player) {
 
         }
-        public override float HitboxBack() {
+        public override Vector2 HitboxBack() {
             return player.numbers.StandingHitboxBack;
         }
 
-        public override float HitboxDown() {
+        public override Vector2 HitboxDown() {
             return player.numbers.StandingHitboxDown;
         }
 
-        public override float HitboxFront() {
+        public override Vector2 HitboxFront() {
             return player.numbers.StandingHitboxFront;
         }
 
-        public override float HitboxUp() {
+        public override Vector2 HitboxUp() {
             return player.numbers.StandingHitboxUp;
         }
 
@@ -50,11 +50,38 @@ namespace PlayerStateMachine {
                 player.state = new Falling(player);
                 player.vel.y = player.numbers.JumpImpulse();
             }
-            var hit = Physics2D.Linecast(player.transform.position, player.transform.position + new Vector3(0, -(HitboxDown())), player.groundLayer);
+            //var hit = Physics2D.Linecast(player.transform.position, player.transform.position + new Vector3(0, - HitboxDown().x-0.1f), player.groundLayer);
+            //rewrite above line as boxcast
+            var hit = Physics2D.BoxCast(player.transform.position + new Vector3(HitboxDownOffset().x, HitboxDownOffset().y), new Vector2(HitboxDown().y, 0.02f), 0, Vector2.down, HitboxDown().x, player.groundLayer);
             if (hit.collider == null)
             {
                 player.state = new Falling(player);
             }
+            else
+            {
+                float move = HitboxDown().x - hit.distance;
+                player.transform.Translate(Vector3.up * move);
+            }
+        }
+
+        public override Vector2 HitboxDownOffset()
+        {
+            return player.numbers.StandingHitboxDownOffset;
+        }
+
+        public override Vector2 HitboxUpOffset()
+        {
+            return player.numbers.StandingHitboxUpOffset;
+        }
+
+        public override Vector2 HitboxFrontOffset()
+        {
+            return player.numbers.StandingHitboxFrontOffset;
+        }
+
+        public override Vector2 HitboxBackOffset()
+        {
+            return  player.numbers.StandingHitboxBackOffset;
         }
     }
 }

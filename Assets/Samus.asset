@@ -13,26 +13,40 @@ MonoBehaviour:
   m_Name: Samus
   m_EditorClassIdentifier: 
   Debug: 1
-  StandingHitboxDown: 0.85
-  StandingHitboxUp: 0.5
-  StandingHitboxFront: 0.25
-  StandingHitboxBack: 0.15
-  CrouchingHitboxDown: 0.25
-  CrouchingHitboxUp: 0.25
-  CrouchingHitboxFront: 0.25
-  CrouchingHitboxBack: 0.25
+  StandingHitboxDown: {x: 0.85, y: 0.4}
+  StandingHitboxDownOffset: {x: 0, y: 0}
+  StandingHitboxUp: {x: 0.54, y: 0.4}
+  StandingHitboxUpOffset: {x: 0, y: 0}
+  StandingHitboxFront: {x: 0.35, y: 1}
+  StandingHitboxFrontOffset: {x: 0, y: -0.15}
+  StandingHitboxBack: {x: 0.3, y: 1}
+  StandingHitboxBackOffset: {x: 0, y: -0.15}
+  CrouchingHitboxDown: {x: 0, y: 0}
+  CrouchingHitboxUp: {x: 0, y: 0}
+  CrouchingHitboxFront: {x: 0, y: 0}
+  CrouchingHitboxBack: {x: 0, y: 0}
   WalkAcceleration: 20
-  WalkingDeacceleration: 0.1
-  TurnInstantSpeedFactor: -0.8
-  StepCheck: 5
+  WalkFriction: 0.1
+  TurnInstantSpeedFactor: 10
+  StepCheck: 60
   StandThreshhold: 1
   JumpHeight: 3.15
   WallJumpImpulse: {x: 10, y: 10}
   DefaultGravity: 20
   MaxFallSpeed: 10
   AirborneAcceleration: 10
-  SpinHitboxDown: 0.35
-  SpinHitboxUp: 0.35
-  SpinHitboxFront: 0.25
-  SpinHitboxBack: 0.25
-  WallJumpBackCheck: 0.5
+  AirborneAccelerationThreshhold: 8.5
+  SpinHitboxDown: {x: 0.35, y: 0.4}
+  SpinHitboxDownOffset: {x: 0, y: 0}
+  SpinHitboxUp: {x: 0.35, y: 0.4}
+  SpinHitboxUpOffset: {x: 0, y: 0}
+  SpinHitboxFront: {x: 0.35, y: 0.4}
+  SpinHitboxFrontOffset: {x: 0, y: 0}
+  SpinHitboxBack: {x: 0.35, y: 0.4}
+  SpinHitboxBackOffset: {x: 0, y: 0}
+  SpinCamOffset: 0.25
+  WallJumpBackCheck: {x: 0, y: 0}
+  WallJumpTime: 0.5
+  WalljumpImpulseInward: {x: 3, y: 11}
+  WalljumpImpulseNeutral: {x: 6.5, y: 7.5}
+  WalljumpImpulseOutward: {x: 10, y: 4}

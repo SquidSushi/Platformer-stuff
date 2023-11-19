@@ -11,19 +11,19 @@ namespace PlayerStateMachine {
         }
         public override bool Grounded() { return false; }
 
-        public override float HitboxBack() {
+        public override Vector2 HitboxBack() {
             return player.numbers.StandingHitboxBack;
         }
 
-        public override float HitboxDown() {
+        public override Vector2 HitboxDown() {
             return player.numbers.StandingHitboxDown;
         }
 
-        public override float HitboxFront() {
+        public override Vector2 HitboxFront() {
             return player.numbers.StandingHitboxFront;
         }
 
-        public override float HitboxUp() {
+        public override Vector2 HitboxUp() {
             return player.numbers.StandingHitboxUp;
         }
 
@@ -35,12 +35,31 @@ namespace PlayerStateMachine {
 
         public override void StateSwap()
         {
-            //check if touches ground, then swap players state to a new standing
-            var hit = Physics2D.Linecast(player.transform.position, player.transform.position + new Vector3(0, -HitboxDown()), player.groundLayer);
-            if (hit.collider != null)
+            float p = 0;
+            if (TouchesGround(ref p))
             {
-                player.state = new Standing(player);
+                player.state = new Running(player);
             }
+        }
+
+        public override Vector2 HitboxDownOffset()
+        {
+            return player.numbers.StandingHitboxDownOffset;
+        }
+
+        public override Vector2 HitboxUpOffset()
+        {
+            return player.numbers.StandingHitboxUpOffset;
+        }
+
+        public override Vector2 HitboxFrontOffset()
+        {
+            return player.numbers.StandingHitboxFrontOffset;
+        }
+
+        public override Vector2 HitboxBackOffset()
+        {
+            return player.numbers.StandingHitboxBackOffset;
         }
     }
 }

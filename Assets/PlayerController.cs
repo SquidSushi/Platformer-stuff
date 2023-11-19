@@ -5,7 +5,8 @@ using UnityEngine;
 using PlayerStateMachine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
     [SerializeField]
     public Vector2 vel = new(0, 0);
     public PlayerStateMachine.PlayerNumbers numbers;
@@ -18,7 +19,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     public GameplayIAA Inputs;
 
-    private void Awake() {
+    private void Awake()
+    {
         anim = GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>();
         Inputs = new GameplayIAA();
@@ -26,47 +28,51 @@ public class PlayerController : MonoBehaviour {
         state = new Standing(this);
     }
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
 
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         state.Update(this);
-        if (vel.x != 0)
-        {
-            facingLeft = vel.x < 0;
-        }
+            renderer.flipX = facingLeft;
     }
-    private void OnDrawGizmos() {
+    private void OnDrawGizmos()
+    {
         //only do in PlayMode
-        if (Application.isPlaying) {
-
-            Vector3[] diamondPoints = new Vector3[4]{
-            transform.position + new Vector3(0,-state.HitboxDown()),
-            transform.position + new Vector3(state.HitboxBack() * -FrontVec().x,0),
-            transform.position + new Vector3(0,state.HitboxUp()),
-            transform.position + new Vector3(state.HitboxFront() * FrontVec().x,0)
-        };
+        if (Application.isPlaying)
+        {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawLineStrip(diamondPoints, true);
-            Gizmos.color = Color.red;
+            //Draw Cubes to represent hitboxes
+            Gizmos.DrawWireCube(transform.position + new Vector3(0, -state.HitboxDown().x / 2) + new Vector3(state.HitboxDownOffset().x,state.HitboxDownOffset().y), new Vector3(state.HitboxDown().y, state.HitboxDown().x));
+            Gizmos.DrawWireCube(transform.position + new Vector3(0, state.HitboxUp().x / 2) + new Vector3(state.HitboxUpOffset().x, state.HitboxUpOffset().y), new Vector3(state.HitboxUp().y, state.HitboxUp().x));
+            Gizmos.DrawWireCube(transform.position + new Vector3(state.HitboxFront().x / 2, 0) + new Vector3(state.HitboxFrontOffset().x, state.HitboxFrontOffset().y), new Vector3(state.HitboxFront().x, state.HitboxFront().y));
+            Gizmos.DrawWireCube(transform.position + new Vector3(-state.HitboxBack().x / 2, 0) + new Vector3(state.HitboxBackOffset().x, state.HitboxBackOffset().y), new Vector3(state.HitboxBack().x, state.HitboxBack().y));
+
             //Draw a cube based on velocity
             float lengthScale = 0.25f;
-            float thicknessScale = 1f/16f;
+            float thicknessScale = 1f / 16f;
             int lineResolution = 40;
-            for (int i = 0; i <= lineResolution; i++) {
-                Gizmos.DrawWireSphere(transform.position + new Vector3(vel.x,vel.y) * i / lineResolution * lengthScale, thicknessScale);
+            for (int i = 0; i <= lineResolution; i++)
+            {
+                Gizmos.DrawWireSphere(transform.position + new Vector3(vel.x, vel.y) * i / lineResolution * lengthScale, thicknessScale);
             }
             //Gizmos.DrawLine(transform.position, transform.position + new Vector3(vel.x * scale, vel.y * scale));
         }
     }
 
-    public Vector2 FrontVec() {
-        if (facingLeft) {
-            return new Vector2(-1, 0);
-        } else {
-            return new Vector2(1, 0);
-        }
+
+public Vector2 FrontVec()
+{
+    if (facingLeft)
+    {
+        return new Vector2(-1, 0);
     }
+    else
+    {
+        return new Vector2(1, 0);
+    }
+}
 }

@@ -8,8 +8,29 @@ using UnityEngine.InputSystem;
 
 namespace PlayerStateMachine
 {
+    
     public abstract class PlayerState
     {
+        protected static float AxisDir(float axis)
+        {
+            if (axis > 0)
+            {
+                return 1;
+            }
+            if (axis < 0)
+            {
+                return -1;
+            }
+            return 0;
+        }
+        protected static float Bool2Axis(bool b)
+        {
+            if (b)
+            {
+                return 1;
+            }
+            return -1;
+        }
         public PlayerState(PlayerController player)
         {
             this.player = player;
@@ -39,73 +60,100 @@ namespace PlayerStateMachine
             //generic collision check and moving out of collision
             float distance = 0;
             if (TouchesGround(ref distance)) {
-                player.transform.Translate(Vector3.up * (HitboxDown() - distance));
-
+                player.transform.Translate(Vector3.up * (HitboxDown().x - distance));
+                if (player.vel.y < 0)
+                {
+                    player.vel.y = 0;
+                }
             }
             if (TouchesWallFront(ref distance)) {
-               player.transform.Translate(distance * new Vector3(-player.FrontVec().x, 0));
+               player.transform.Translate(-player.FrontVec() * (HitboxFront().x - distance));
+                if (player.vel.x * player.FrontVec().x > 0)
+                {
+                    player.vel.x = 0;
+                }
             }
             if (TouchesWallBack(ref distance)) {
-                player.transform.Translate(distance * new Vector3(player.FrontVec().x, 0));
+                player.transform.Translate(player.FrontVec() * (HitboxBack().x - distance));
+                if (player.vel.x * player.FrontVec().x < 0)
+                {
+                    player.vel.x = 0;
+                }
             }
             if (TouchesCeiling(ref distance)) {
-                player.transform.Translate(distance * new Vector3(0, -1));
+                player.transform.Translate(Vector3.down * (HitboxUp().x - distance));
+                if (player.vel.y > 0)
+                {
+                    player.vel.y = 0;
+                }
             }
 
         }
 
         public bool TouchesGround(ref float outDistance) {
-            Vector2 origin = player.transform.position;
+            Vector2 origin = player.transform.position + new Vector3(HitboxDownOffset().x,HitboxDownOffset().y);
             Vector2 direction = new Vector2(0, -1);
-            RaycastHit2D hit = Physics2D.Raycast(origin, direction, HitboxDown(), player.groundLayer);
+            float thickness = 0.02f;
+            RaycastHit2D hit = Physics2D.BoxCast(origin,new Vector2(HitboxDown().y,thickness),0,direction,HitboxDown().x,player.groundLayer);
             if (hit.collider != null) {
-                outDistance = hit.distance;
+                outDistance = hit.distance+thickness/2;
                 return true;
             }
             return false;
         }
 
         public bool TouchesWallFront(ref float outDistance) {
-            Vector2 origin = player.transform.position;
+            Vector2 origin = player.transform.position + new Vector3(HitboxFrontOffset().x,HitboxFrontOffset().y);
             Vector2 direction = new Vector2(player.FrontVec().x, 0);
-            RaycastHit2D hit = Physics2D.Raycast(origin, direction, HitboxFront(), player.groundLayer);
-            if (hit.collider != null) {
-                outDistance = hit.distance;
+            float thickness = 0.02f;
+            RaycastHit2D hit = Physics2D.BoxCast(origin, new Vector2(thickness, HitboxFront().y), 0, direction, HitboxFront().x, player.groundLayer);
+            if (hit.collider != null)
+            {
+                outDistance = hit.distance + thickness / 2;
                 return true;
             }
             return false;
         }
 
         public bool TouchesWallBack(ref float outDistance) {
-            Vector2 origin = player.transform.position;
+            Vector2 origin = player.transform.position + new Vector3(HitboxBackOffset().x,HitboxBackOffset().y);
             Vector2 direction = new Vector2(-player.FrontVec().x, 0);
-            RaycastHit2D hit = Physics2D.Raycast(origin, direction, HitboxBack(), player.groundLayer);
-            if (hit.collider != null) {
-                outDistance = hit.distance;
+            float thickness = 0.02f;
+            RaycastHit2D hit = Physics2D.BoxCast(origin, new Vector2(thickness, HitboxBack().y), 0, direction, HitboxBack().x, player.groundLayer);
+            if (hit.collider != null)
+            {
+                outDistance = hit.distance + thickness / 2;
                 return true;
             }
             return false;
         }
 
         public bool TouchesCeiling(ref float outDistance) {
-            Vector2 origin = player.transform.position;
+            Vector2 origin = player.transform.position + new Vector3(HitboxUpOffset().x,HitboxUpOffset().y);
             Vector2 direction = new Vector2(0, 1);
-            RaycastHit2D hit = Physics2D.Raycast(origin, direction, HitboxUp(), player.groundLayer);
-            if (hit.collider != null) {
-                outDistance = hit.distance;
+            float thickness = 0.02f;
+            RaycastHit2D hit = Physics2D.BoxCast(origin, new Vector2(HitboxUp().y, thickness), 0, direction, HitboxUp().x, player.groundLayer);
+            if (hit.collider != null)
+            {
+                outDistance = hit.distance + thickness / 2;
                 return true;
             }
             return false;
         }
         
-        public abstract float HitboxDown();
-        public abstract float HitboxUp();
-        public abstract float HitboxFront();
-        public abstract float HitboxBack();
+        public abstract Vector2 HitboxDown();
+
+        public abstract Vector2 HitboxDownOffset();
+        public abstract Vector2 HitboxUp();
+        public abstract Vector2 HitboxUpOffset();
+        public abstract Vector2 HitboxFront();
+        public abstract Vector2 HitboxFrontOffset();
+        public abstract Vector2 HitboxBack();
+        public abstract Vector2 HitboxBackOffset();
         public abstract String Name();
 
         public abstract bool Grounded();
-        public virtual Vector2 CamOffset()
+        public virtual Vector3 CamOffset()
         {
             return new Vector2(0, 0);
         }

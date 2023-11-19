@@ -13,22 +13,26 @@ namespace PlayerStateMachine
     {
         public bool Debug = false;
         [Header("Standing")]
-        public float StandingHitboxDown = 0.5f;
-        public float StandingHitboxUp = 0.5f;
-        public float StandingHitboxFront = 0.25f;
-        public float StandingHitboxBack = 0.25f;
+        public Vector2 StandingHitboxDown;
+        public Vector2 StandingHitboxDownOffset;
+        public Vector2 StandingHitboxUp;
+        public Vector2 StandingHitboxUpOffset;
+        public Vector2 StandingHitboxFront;
+        public Vector2 StandingHitboxFrontOffset;
+        public Vector2 StandingHitboxBack;
+        public Vector2 StandingHitboxBackOffset;
         [Header("Crouching")]
-        public float CrouchingHitboxDown = 0.25f;
-        public float CrouchingHitboxUp = 0.25f;
-        public float CrouchingHitboxFront = 0.25f;
-        public float CrouchingHitboxBack = 0.25f;
+        public Vector2 CrouchingHitboxDown;
+        public Vector2 CrouchingHitboxUp;
+        public Vector2 CrouchingHitboxFront;
+        public Vector2 CrouchingHitboxBack;
         [Header("Running")]
         public float WalkAcceleration = 10f;
-        public float WalkingDeacceleration = 10f;
+        public float WalkFriction = 10f;
         public float TurnInstantSpeedFactor = -0.8f; //mutliply x speed when turning
         public float StepCheck = 3f; //per second
         public float StandThreshhold = 0.1f;
-        [Header("Jumping and Airborne"), Tooltip("Inital YEET upon pressing Jump")]
+        [Header("Jumping and Airborne"), Tooltip("Total Jumpheight. Inital Yeet is calculated off this")]
         public float JumpHeight = 3.25f;
         public float JumpImpulse() {
             return Mathf.Sqrt(2 * JumpHeight * DefaultGravity);
@@ -37,11 +41,23 @@ namespace PlayerStateMachine
         public float DefaultGravity = 10f;
         public float MaxFallSpeed = 10f;
         public float AirborneAcceleration = 10f;
+        public float AirborneAccelerationThreshhold = 0.1f;
         [Header("Spinning")]
-        public float SpinHitboxDown = 0.35f;
-        public float SpinHitboxUp = 0.35f;
-        public float SpinHitboxFront = 0.25f;
-        public float SpinHitboxBack = 0.25f;
-        public float WallJumpBackCheck = 0.5f;
+        public Vector2 SpinHitboxDown;
+        public Vector2 SpinHitboxDownOffset;
+        public Vector2 SpinHitboxUp;
+        public Vector2 SpinHitboxUpOffset;
+        public Vector2 SpinHitboxFront;
+        public Vector2 SpinHitboxFrontOffset;
+        public Vector2 SpinHitboxBack;
+        public Vector2 SpinHitboxBackOffset;
+        public float SpinCamOffset = 0.5f;
+        public Vector2 WallJumpBackCheck; //this is just a spot for a sphercast
+        [Header("Walljump")]
+        public float WallJumpTime = 0.2f;
+        public Vector2 WalljumpImpulseInward;
+        public Vector2 WalljumpImpulseNeutral;
+        public Vector2 WalljumpImpulseOutward;
+        
     }
 }
