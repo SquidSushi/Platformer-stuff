@@ -62,7 +62,7 @@ class WallCling : PlayerState
 
     public override void StateSwap()
     {
-        if (StateAge > player.numbers.WallJumpTime || !Inputs.Jump.IsPressed())
+        if (Inputs.Jump.WasReleasedThisFrame())
         {
             player.state = new Spin(player);
             float direction = AxisDir(Inputs.Walking.ReadValue<Vector2>().x);
@@ -86,6 +86,11 @@ class WallCling : PlayerState
                     player.vel.y = player.numbers.WalljumpImpulseNeutral.y;
                     break;
             }
+        }
+        if (StateAge > player.numbers.WallJumpTime)
+        {
+            player.vel = Vector2.zero;
+            player.state = new Falling(player);
         }
     }
 }
