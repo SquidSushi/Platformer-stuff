@@ -48,8 +48,8 @@ public class PlayerController : MonoBehaviour
             //Draw Cubes to represent hitboxes
             Gizmos.DrawWireCube(transform.position + new Vector3(0, -state.HitboxDown().x / 2) + new Vector3(state.HitboxDownOffset().x,state.HitboxDownOffset().y), new Vector3(state.HitboxDown().y, state.HitboxDown().x));
             Gizmos.DrawWireCube(transform.position + new Vector3(0, state.HitboxUp().x / 2) + new Vector3(state.HitboxUpOffset().x, state.HitboxUpOffset().y), new Vector3(state.HitboxUp().y, state.HitboxUp().x));
-            Gizmos.DrawWireCube(transform.position + new Vector3(state.HitboxFront().x / 2, 0) + new Vector3(state.HitboxFrontOffset().x, state.HitboxFrontOffset().y), new Vector3(state.HitboxFront().x, state.HitboxFront().y));
-            Gizmos.DrawWireCube(transform.position + new Vector3(-state.HitboxBack().x / 2, 0) + new Vector3(state.HitboxBackOffset().x, state.HitboxBackOffset().y), new Vector3(state.HitboxBack().x, state.HitboxBack().y));
+            Gizmos.DrawWireCube(transform.position + new Vector3(state.HitboxFront().x / 2 * FrontVec().x, 0) + new Vector3(state.HitboxFrontOffset().x, state.HitboxFrontOffset().y), new Vector3(state.HitboxFront().x, state.HitboxFront().y));
+            Gizmos.DrawWireCube(transform.position + new Vector3(-state.HitboxBack().x / 2 * FrontVec().x, 0) + new Vector3(state.HitboxBackOffset().x, state.HitboxBackOffset().y), new Vector3(state.HitboxBack().x, state.HitboxBack().y));
 
             //Draw a cube based on velocity
             float lengthScale = 0.25f;
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
             {
                 Gizmos.DrawWireSphere(transform.position + new Vector3(vel.x, vel.y) * i / lineResolution * lengthScale, thicknessScale);
             }
-            //Gizmos.DrawLine(transform.position, transform.position + new Vector3(vel.x * scale, vel.y * scale));
+            Gizmos.DrawLine(transform.position, transform.position + new Vector3(vel.x, vel.y));
         }
     }
 

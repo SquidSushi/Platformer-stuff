@@ -15,6 +15,10 @@ namespace PlayerStateMachine {
             return "Running";
         }
 
+        public override Vector3 CamOffset() {
+            return new Vector3(player.vel.x * player.numbers.RunCamProvidence, 0, 0);
+        }
+
         public override bool Grounded() { return true; }
 
         public override Vector2 HitboxBack() {

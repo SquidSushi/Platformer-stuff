@@ -32,6 +32,7 @@ namespace PlayerStateMachine
         public float TurnInstantSpeedFactor = -0.8f; //mutliply x speed when turning
         public float StepCheck = 3f; //per second
         public float StandThreshhold = 0.1f;
+        public float RunCamProvidence = 0.5f;
         [Header("Jumping and Airborne"), Tooltip("Total Jumpheight. Inital Yeet is calculated off this")]
         public float JumpHeight = 3.25f;
         public float JumpImpulse() {
@@ -51,10 +52,11 @@ namespace PlayerStateMachine
         public Vector2 SpinHitboxFrontOffset;
         public Vector2 SpinHitboxBack;
         public Vector2 SpinHitboxBackOffset;
-        public float SpinCamOffset = 0.5f;
+        public float SpinCamProvidence = 0.5f;
         public Vector2 WallJumpBackCheck; //this is just a spot for a sphercast
         [Header("Walljump")]
         public float WallJumpTime = 0.2f;
+        public float WallClingBack = 0.1f;
         public Vector2 WalljumpImpulseInward;
         public Vector2 WalljumpImpulseNeutral;
         public Vector2 WalljumpImpulseOutward;

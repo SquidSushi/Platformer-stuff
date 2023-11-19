@@ -12,7 +12,7 @@ class Spin : PlayerState
 
     public override Vector3 CamOffset()
     {
-        return player.vel * player.numbers.SpinCamOffset;
+        return player.vel * player.numbers.SpinCamProvidence;
     }
 
     public override Vector2 HitboxBack()
@@ -77,15 +77,20 @@ class Spin : PlayerState
 
     public override void StateSwap()
     {
-        float u = 0;
-        if (TouchesGround(ref u))
+        float d = 0;
+        if (TouchesGround(ref d))
         {
             player.state = new Running(player);
         }
-        if (TouchesWallFront(ref u) && Inputs.Jump.WasPerformedThisFrame())
+        if (TouchesWallFront(ref d) && Inputs.Jump.WasPerformedThisFrame())
         {
             player.state = new WallCling(player);
             player.facingLeft = !player.facingLeft;
+            (player.state as WallCling).StickToWall();
+        }
+        if (TouchesWallBack(ref d) && Inputs.Jump.WasPerformedThisFrame()) {
+            player.state = new WallCling(player);
+            (player.state as WallCling).StickToWall();
         }
     }
 }

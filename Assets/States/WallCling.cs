@@ -7,11 +7,46 @@ class WallCling : PlayerState
     {
     }
 
+    public void StickToWall() {
+        Vector2 direction = -player.FrontVec();
+        var hit = Physics2D.BoxCast(
+            player.transform.position,
+            new Vector2(0.02f, player.numbers.SpinHitboxBack.y),
+            0,
+            direction,
+            1,
+            player.groundLayer
+            );
+        if (hit.collider != null) {
+            float move = hit.distance - player.numbers.WallClingBack - 0.01f;
+            player.transform.Translate(new Vector3(direction.x * move, 0));
+        }
+
+    }
+
+    private Vector2 JumpDirection() {
+        float direction = AxisDir(Inputs.Walking.ReadValue<Vector2>().x);
+        direction *= Bool2Axis(!player.facingLeft);
+        float facingDirection = Bool2Axis(!player.facingLeft);
+        switch (direction) {
+            case 1:
+                return new Vector2(player.numbers.WalljumpImpulseOutward.x * facingDirection, player.numbers.WalljumpImpulseOutward.y);
+            case -1:
+                return new Vector2(player.numbers.WalljumpImpulseInward.x * facingDirection, player.numbers.WalljumpImpulseInward.y);
+            default:
+                return new Vector2(player.numbers.WalljumpImpulseNeutral.x * facingDirection, player.numbers.WalljumpImpulseNeutral.y);
+        }
+    }
+
+    public override Vector3 CamOffset() {
+        return JumpDirection() * 0.5f;
+    }
+
     public override bool Grounded() { return false; }
 
     public override Vector2 HitboxBack()
     {
-        return player.numbers.SpinHitboxBack;
+        return new Vector2(0, player.numbers.SpinHitboxBack.y);
     }
 
     public override Vector2 HitboxBackOffset()
@@ -65,27 +100,7 @@ class WallCling : PlayerState
         if (Inputs.Jump.WasReleasedThisFrame())
         {
             player.state = new Spin(player);
-            float direction = AxisDir(Inputs.Walking.ReadValue<Vector2>().x);
-            direction *= Bool2Axis(!player.facingLeft);
-            float facingDirection = Bool2Axis(!player.facingLeft);
-            switch (direction)
-            {
-                case 1:
-                    player.state = new Spin(player);
-                    player.vel.x = player.numbers.WalljumpImpulseOutward.x * facingDirection;
-                    player.vel.y = player.numbers.WalljumpImpulseOutward.y;
-                    break;
-                case -1:
-                    player.state = new Spin(player);
-                    player.vel.x = player.numbers.WalljumpImpulseInward.x * facingDirection;
-                    player.vel.y = player.numbers.WalljumpImpulseInward.y;
-                    break;
-                default:
-                    player.state = new Spin(player);
-                    player.vel.x = player.numbers.WalljumpImpulseNeutral.x * facingDirection;
-                    player.vel.y = player.numbers.WalljumpImpulseNeutral.y;
-                    break;
-            }
+            player.vel = JumpDirection();
         }
         if (StateAge > player.numbers.WallJumpTime)
         {
