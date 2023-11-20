@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ace9ab0db5d8ed64495eac3f9dc2e6ef, type: 3}
   m_Name: Samus
   m_EditorClassIdentifier: 
-  Debug: 1
+  Debug: 0
   StandingHitboxDown: {x: 0.85, y: 0.4}
   StandingHitboxDownOffset: {x: 0, y: 0}
   StandingHitboxUp: {x: 0.54, y: 0.4}
@@ -31,9 +31,9 @@ MonoBehaviour:
   StepCheck: 60
   StandThreshhold: 1
   RunCamProvidence: 0.5
-  JumpHeight: 3.15
+  JumpHeight: 3
   WallJumpImpulse: {x: 10, y: 10}
-  DefaultGravity: 20
+  DefaultGravity: 25
   MaxFallSpeed: 10
   AirborneAcceleration: 10
   AirborneAccelerationThreshhold: 8.5
@@ -47,7 +47,7 @@ MonoBehaviour:
   SpinHitboxBackOffset: {x: 0, y: 0}
   SpinCamProvidence: 0.5
   WallJumpBackCheck: {x: 0, y: 0}
-  WallJumpTime: 9999
+  WallJumpTime: 0.5
   WallClingBack: 0.1875
   WalljumpImpulseInward: {x: 3, y: 11}
   WalljumpImpulseNeutral: {x: 6.5, y: 7.5}
