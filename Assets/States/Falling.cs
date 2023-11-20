@@ -30,6 +30,7 @@ namespace PlayerStateMachine {
         public override void Motion() {
             //while falling, add gravity to the player velocity
             player.vel -= new Vector2(0, player.numbers.DefaultGravity * Time.deltaTime);
+            player.vel += Inputs.Walking.ReadValue<Vector2>() * player.numbers.AirborneAcceleration * Time.deltaTime;
             player.transform.Translate(player.vel * Time.deltaTime);
         }
 
