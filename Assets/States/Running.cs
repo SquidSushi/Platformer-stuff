@@ -72,7 +72,8 @@ namespace PlayerStateMachine {
             if (Inputs.Jump.WasPerformedThisFrame())
             {
                 player.state = new Spin(player);
-                player.vel.y = player.numbers.JumpImpulse();
+                player.vel.y = player.numbers.jumpImpulse * player.numbers.MinimumJumpHeightPercentage;
+                player.timeSinceJump = 0;
                 return;
             }
             var hit = Physics2D.Linecast(player.transform.position, player.transform.position + new Vector3(0, -HitboxDown().x - player.numbers.StepCheck * Time.deltaTime), player.groundLayer);

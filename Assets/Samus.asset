@@ -31,10 +31,11 @@ MonoBehaviour:
   StepCheck: 60
   StandThreshhold: 1
   RunCamProvidence: 0.5
-  JumpHeight: 3
-  WallJumpImpulse: {x: 10, y: 10}
+  jumpImpulse: 11.25
+  JumpHoldTime: 0.1
+  MinimumJumpHeightPercentage: 0.25
   DefaultGravity: 25
-  MaxFallSpeed: 10
+  MaxFallSpeed: 25
   AirborneAcceleration: 10
   AirborneAccelerationThreshhold: 8.5
   SpinHitboxDown: {x: 0.35, y: 0.4}

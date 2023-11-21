@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public bool facingLeft = false;
     public LayerMask groundLayer;
     public LayerMask semiSolid;
+    public float timeSinceJump = 0;
     public PlayerState state;
     public Animator anim;
     private new SpriteRenderer renderer;
@@ -36,8 +37,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         state.Update(this);
-            renderer.flipX = facingLeft;
+        renderer.flipX = facingLeft;
+        timeSinceJump += Time.deltaTime;
     }
     private void OnDrawGizmos()
     {
@@ -46,7 +49,7 @@ public class PlayerController : MonoBehaviour
         {
             Gizmos.color = Color.yellow;
             //Draw Cubes to represent hitboxes
-            Gizmos.DrawWireCube(transform.position + new Vector3(0, -state.HitboxDown().x / 2) + new Vector3(state.HitboxDownOffset().x,state.HitboxDownOffset().y), new Vector3(state.HitboxDown().y, state.HitboxDown().x));
+            Gizmos.DrawWireCube(transform.position + new Vector3(0, -state.HitboxDown().x / 2) + new Vector3(state.HitboxDownOffset().x, state.HitboxDownOffset().y), new Vector3(state.HitboxDown().y, state.HitboxDown().x));
             Gizmos.DrawWireCube(transform.position + new Vector3(0, state.HitboxUp().x / 2) + new Vector3(state.HitboxUpOffset().x, state.HitboxUpOffset().y), new Vector3(state.HitboxUp().y, state.HitboxUp().x));
             Gizmos.DrawWireCube(transform.position + new Vector3(state.HitboxFront().x / 2 * FrontVec().x, 0) + new Vector3(state.HitboxFrontOffset().x, state.HitboxFrontOffset().y), new Vector3(state.HitboxFront().x, state.HitboxFront().y));
             Gizmos.DrawWireCube(transform.position + new Vector3(-state.HitboxBack().x / 2 * FrontVec().x, 0) + new Vector3(state.HitboxBackOffset().x, state.HitboxBackOffset().y), new Vector3(state.HitboxBack().x, state.HitboxBack().y));
@@ -64,15 +67,15 @@ public class PlayerController : MonoBehaviour
     }
 
 
-public Vector2 FrontVec()
-{
-    if (facingLeft)
+    public Vector2 FrontVec()
     {
-        return new Vector2(-1, 0);
+        if (facingLeft)
+        {
+            return new Vector2(-1, 0);
+        }
+        else
+        {
+            return new Vector2(1, 0);
+        }
     }
-    else
-    {
-        return new Vector2(1, 0);
-    }
-}
 }

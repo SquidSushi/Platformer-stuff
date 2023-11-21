@@ -48,7 +48,8 @@ namespace PlayerStateMachine {
             if (Inputs.Jump.IsPressed())
             {
                 player.state = new Falling(player);
-                player.vel.y = player.numbers.JumpImpulse();
+                player.vel.y = player.numbers.jumpImpulse * player.numbers.MinimumJumpHeightPercentage;
+                player.timeSinceJump = 0;
             }
             //var hit = Physics2D.Linecast(player.transform.position, player.transform.position + new Vector3(0, - HitboxDown().x-0.1f), player.groundLayer);
             //rewrite above line as boxcast

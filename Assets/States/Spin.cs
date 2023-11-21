@@ -66,6 +66,10 @@ class Spin : PlayerState
         {
             player.vel.y = -player.numbers.MaxFallSpeed;
         }
+        if (Inputs.Jump.IsPressed() && player.timeSinceJump < player.numbers.JumpHoldTime)
+        {
+            player.vel += new Vector2(0, player.numbers.jumpImpulse * Time.deltaTime / player.numbers.JumpHoldTime);
+        }
         player.transform.Translate(player.vel * Time.deltaTime);
     }
 

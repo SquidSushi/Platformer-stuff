@@ -34,12 +34,13 @@ namespace PlayerStateMachine
         public float StandThreshhold = 0.1f;
         public float RunCamProvidence = 0.5f;
         [Header("Jumping and Airborne"), Tooltip("Total Jumpheight. Inital Yeet is calculated off this")]
-        public float JumpHeight = 3.25f;
-        public float JumpImpulse() {
-            return Mathf.Sqrt(2 * JumpHeight * DefaultGravity);
-        }
-        public Vector2 WallJumpImpulse = new (10,10);
+        public float jumpImpulse = 10f;
+        [Tooltip("How long the player can hold the jump button to jump higher")]
+        public float JumpHoldTime = 0.2f;
+        [Tooltip("How much of the jumpheight is the minimum jumpheight")]
+        public float MinimumJumpHeightPercentage = 0.5f;
         public float DefaultGravity = 10f;
+        [Tooltip("The maximum speed the player can fall at")]
         public float MaxFallSpeed = 10f;
         public float AirborneAcceleration = 10f;
         public float AirborneAccelerationThreshhold = 0.1f;
