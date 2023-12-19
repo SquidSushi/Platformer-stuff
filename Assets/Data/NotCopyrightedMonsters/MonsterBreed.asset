@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f4869ffea29ed9439b8eb7da331acaa, type: 3}
+  m_Name: MonsterBreed
+  m_EditorClassIdentifier: 
+  monsterName: Pikertschu
+  FrontSprite: {fileID: 0}
+  BackSprite: {fileID: 0}
+  PrimaryElement: 13
+  SecondaryElement: 0
+  BaseHealth: 60
+  BasePhysicalAttack: 70
+  BaseMagicalAttack: 75
+  BasePhysicalDefense: 50
+  BaseMagicalDefense: 60
+  BaseSpeed: 90
+  LevelUpMoves:
+  - level: 1
+    move:
+      element: 13
+      name: Thunderbolt
+      power: 80
+      accuracy: 100
+  - level: 0
+    move:
+      element: 0
+      name: 
+      power: 0
+      accuracy: 0
+  - level: 0
+    move:
+      element: 0
+      name: 
+      power: 0
+      accuracy: 0

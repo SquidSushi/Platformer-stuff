@@ -115,7 +115,7 @@ namespace PlayerStateMachine
             return false;
         }
 
-        public bool TouchesWallBack(ref float outDistance) {
+        protected bool TouchesWallBack(ref float outDistance) {
             Vector2 origin = player.transform.position + new Vector3(HitboxBackOffset().x,HitboxBackOffset().y);
             Vector2 direction = new Vector2(-player.FrontVec().x, 0);
             float thickness = 0.02f;
