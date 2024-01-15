@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ace9ab0db5d8ed64495eac3f9dc2e6ef, type: 3}
-  m_Name: Samus
+  m_Name: John
   m_EditorClassIdentifier: 
   Debug: 0
   StandingHitboxDown: {x: 0.8, y: 0.4}
@@ -25,13 +25,13 @@ MonoBehaviour:
   CrouchingHitboxUp: {x: 0, y: 0}
   CrouchingHitboxFront: {x: 0, y: 0}
   CrouchingHitboxBack: {x: 0, y: 0}
-  WalkAcceleration: 20
+  WalkAcceleration: 16
   WalkFriction: 0.1
   TurnInstantSpeedFactor: 10
   StepCheck: 60
   StandThreshhold: 1
   RunCamProvidence: 0.5
-  jumpImpulse: 11.25
+  jumpImpulse: 14
   JumpHoldTime: 0.1
   MinimumJumpHeightPercentage: 0.25
   DefaultGravity: 25
@@ -48,7 +48,7 @@ MonoBehaviour:
   SpinHitboxBackOffset: {x: 0, y: 0}
   SpinCamProvidence: 0.5
   WallJumpBackCheck: {x: 0, y: 0}
-  WallJumpTime: 0.5
+  WallJumpTime: 10
   WallClingBack: 0.1875
   WalljumpImpulseInward: {x: 3, y: 11}
   WalljumpImpulseNeutral: {x: 6.5, y: 7.5}

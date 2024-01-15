@@ -490,7 +490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 584420382}
   minSpeed: 1
-  percentSpeed: 0.1
+  percentSpeed: 0.05
 --- !u!1 &569545618
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,6 +763,7 @@ GameObject:
   - component: {fileID: 584420384}
   - component: {fileID: 584420382}
   - component: {fileID: 584420386}
+  - component: {fileID: 584420387}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -783,7 +784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vel: {x: 0, y: 0}
-  numbers: {fileID: 11400000, guid: 1462bc9eef0eca542a34b05d1959cbfb, type: 2}
+  numbers: {fileID: 11400000, guid: d9fbdd89e8b236e4685195b21e142a27, type: 2}
   facingLeft: 0
   groundLayer:
     serializedVersion: 2
@@ -793,6 +794,7 @@ MonoBehaviour:
     m_Bits: 0
   timeSinceJump: 0
   anim: {fileID: 584420386}
+  unlockedSpaceJump: 0
 --- !u!212 &584420384
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -881,6 +883,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &584420387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584420381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c0c0f1015b37334498aedcd0e285d3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &753282281
 GameObject:
   m_ObjectHideFlags: 0

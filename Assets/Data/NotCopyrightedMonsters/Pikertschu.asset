@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f4869ffea29ed9439b8eb7da331acaa, type: 3}
-  m_Name: MonsterBreed
+  m_Name: Pikertschu
   m_EditorClassIdentifier: 
   monsterName: Pikertschu
   FrontSprite: {fileID: 0}

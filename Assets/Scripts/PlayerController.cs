@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private new SpriteRenderer renderer;
     [SerializeField]
     public GameplayIAA Inputs;
+    public bool unlockedSpaceJump = false;
 
     private void Awake()
     {
@@ -35,12 +36,14 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         
         state.Update(this);
         renderer.flipX = facingLeft;
         timeSinceJump += Time.deltaTime;
+        print(Inputs.Movement.Walking.ReadValue<Vector2>().x);
+
     }
     private void OnDrawGizmos()
     {

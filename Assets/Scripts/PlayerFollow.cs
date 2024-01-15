@@ -14,6 +14,7 @@ public class PlayerFollow : MonoBehaviour
     }
 
     // Update is called once per frame
+
     void Update()
     {
         Vector2 fullWay = (target.state.CamOffset() + target.transform.position) - transform.position;

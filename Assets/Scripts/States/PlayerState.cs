@@ -43,9 +43,9 @@ namespace PlayerStateMachine
 
         public void Update(PlayerController player) {
             this.StateAge += Time.deltaTime;
-            Motion();
+            this.Motion();
             Physics2D.SyncTransforms();
-            StateSwap();
+            this.StateSwap();
             if (player.state != this) {
                 this.OnExit();
                 player.state.OnEnter();
@@ -114,6 +114,8 @@ namespace PlayerStateMachine
             }
             return false;
         }
+
+
 
         protected bool TouchesWallBack(ref float outDistance) {
             Vector2 origin = player.transform.position + new Vector3(HitboxBackOffset().x,HitboxBackOffset().y);

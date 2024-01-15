@@ -71,6 +71,12 @@ class Spin : PlayerState
             player.vel += new Vector2(0, player.numbers.jumpImpulse * Time.deltaTime / player.numbers.JumpHoldTime);
         }
         player.transform.Translate(player.vel * Time.deltaTime);
+        if (player.vel.y < 0) {
+            if (player.unlockedSpaceJump && Inputs.Jump.WasPressedThisFrame())
+            {
+                player.vel.y = player.numbers.jumpImpulse;
+            }
+        }
     }
 
     public override string Name()
