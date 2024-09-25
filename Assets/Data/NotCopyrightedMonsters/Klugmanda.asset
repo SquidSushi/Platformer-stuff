@@ -18,11 +18,11 @@ MonoBehaviour:
   PrimaryElement: 10
   SecondaryElement: 14
   BaseHealth: 60
-  BasePhysicalAttack: 83.5
-  BaseMagicalAttack: 114.9
-  BasePhysicalDefense: 46.5
-  BaseMagicalDefense: 50.7
-  BaseSpeed: 78.5
+  BasePhysicalAttack: 83
+  BaseMagicalAttack: 114
+  BasePhysicalDefense: 46
+  BaseMagicalDefense: 50
+  BaseSpeed: 78
   LevelUpMoves:
   - level: 1
     move:

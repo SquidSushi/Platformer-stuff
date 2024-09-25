@@ -17,4 +17,14 @@ public class MovingPlatform : MonoBehaviour
     {
         transform.Translate(0, Mathf.Sin(Time.time * frequency) * Time.deltaTime * size, 0);
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        Gizmos.color = Color.green;
+        Vector3 moveOffset = new Vector3(0, size, 0);
+        moveOffset += transform.position; 
+        Gizmos.DrawLine(transform.position, moveOffset);
+        Gizmos.DrawWireCube(moveOffset, new(transform.localScale.x * collider.size.x, transform.localScale.y * collider.size.y, 1));
+    }
 }

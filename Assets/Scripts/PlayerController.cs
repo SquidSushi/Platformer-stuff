@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private new SpriteRenderer renderer;
     [SerializeField]
     public GameplayIAA Inputs;
-    public bool unlockedSpaceJump = false;
+    public bool unlockedSpaceJump = true;
 
     private void Awake()
     {
@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
         state.Update(this);
         renderer.flipX = facingLeft;
         timeSinceJump += Time.deltaTime;
-        print(Inputs.Movement.Walking.ReadValue<Vector2>().x);
+        //print(Inputs.Movement.Walking.ReadValue<Vector2>().x);
 
     }
     private void OnDrawGizmos()
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
             //Draw a cube based on velocity
             float lengthScale = 0.25f;
             float thicknessScale = 1f / 16f;
-            int lineResolution = 40;
+            int lineResolution = 0;
             for (int i = 0; i <= lineResolution; i++)
             {
                 Gizmos.DrawWireSphere(transform.position + new Vector3(vel.x, vel.y) * i / lineResolution * lengthScale, thicknessScale);

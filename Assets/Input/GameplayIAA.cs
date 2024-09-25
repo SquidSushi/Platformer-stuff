@@ -169,7 +169,7 @@ public partial class @GameplayIAA: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ef53005a-3792-4f4b-bdbf-3069a79e61fb"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

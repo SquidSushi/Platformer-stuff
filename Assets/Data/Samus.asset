@@ -25,7 +25,7 @@ MonoBehaviour:
   CrouchingHitboxUp: {x: 0, y: 0}
   CrouchingHitboxFront: {x: 0, y: 0}
   CrouchingHitboxBack: {x: 0, y: 0}
-  WalkAcceleration: 20
+  WalkAcceleration: 30
   WalkFriction: 0.1
   TurnInstantSpeedFactor: 10
   StepCheck: 60
@@ -34,7 +34,7 @@ MonoBehaviour:
   jumpImpulse: 11.25
   JumpHoldTime: 0.1
   MinimumJumpHeightPercentage: 0.25
-  DefaultGravity: 25
+  DefaultGravity: 20
   MaxFallSpeed: 25
   AirborneAcceleration: 10
   AirborneAccelerationThreshhold: 8.5

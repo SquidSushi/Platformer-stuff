@@ -10,35 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f4869ffea29ed9439b8eb7da331acaa, type: 3}
-  m_Name: Pikertschu
+  m_Name: Thingie
   m_EditorClassIdentifier: 
-  monsterName: Pikertschu
+  monsterName: Thingie
   FrontSprite: {fileID: 0}
   BackSprite: {fileID: 0}
-  PrimaryElement: 13
-  SecondaryElement: 9
-  BaseHealth: 60
-  BasePhysicalAttack: 85
-  BaseMagicalAttack: 60
-  BasePhysicalDefense: 50
-  BaseMagicalDefense: 60
-  BaseSpeed: 90
+  PrimaryElement: 3
+  SecondaryElement: 11
+  BaseHealth: 100
+  BasePhysicalAttack: 100
+  BaseMagicalAttack: 100
+  BasePhysicalDefense: 100
+  BaseMagicalDefense: 100
+  BaseSpeed: 100
   LevelUpMoves:
-  - level: 1
+  - level: 3
     move:
-      element: 13
-      name: Thunderbolt
-      power: 80
-      accuracy: 100
-  - level: 0
-    move:
-      element: 0
-      name: 
-      power: 0
-      accuracy: 0
-  - level: 0
-    move:
-      element: 0
-      name: 
-      power: 0
+      element: 11
+      name: splash
+      power: 22
       accuracy: 0

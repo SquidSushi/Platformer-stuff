@@ -102,5 +102,6 @@ class Spin : PlayerState
             player.state = new WallCling(player);
             (player.state as WallCling).StickToWall();
         }
+
     }
 }

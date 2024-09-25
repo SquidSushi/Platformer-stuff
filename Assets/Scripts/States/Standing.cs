@@ -1,4 +1,5 @@
 using PlayerStateMachine;
+using System;
 using UnityEngine;
 
 namespace PlayerStateMachine {
@@ -8,24 +9,34 @@ namespace PlayerStateMachine {
 
         }
         public override Vector2 HitboxBack() {
-            return player.numbers.StandingHitboxBack;
+            Vector2 r = player.numbers.StandingHitboxBack;
+            r.x *= player.transform.localScale.x;
+            r.y *= player.transform.localScale.y;
+            return r;
         }
 
         public override Vector2 HitboxDown() {
-            return player.numbers.StandingHitboxDown;
+            Vector2 r = player.numbers.StandingHitboxDown;
+            r.x *= player.transform.localScale.y;
+            r.y *= player.transform.localScale.x;
+            return r;
         }
 
         public override Vector2 HitboxFront() {
-            return player.numbers.StandingHitboxFront;
+            Vector2 r = player.numbers.StandingHitboxFront;
+            r.x *= player.transform.localScale.x;
+            r.y *= player.transform.localScale.y;
+            return r;
         }
 
         public override Vector2 HitboxUp() {
-            return player.numbers.StandingHitboxUp;
+            Vector2 r = player.numbers.StandingHitboxUp;
+            r.x *= player.transform.localScale.y;
+            r.y *= player.transform.localScale.x;
+            return r;
         }
 
-        public override string Name() {
-            return "Standing";
-        }
+        public override string Name() { return "Standing"; }
 
         public override bool Grounded() { return true; }
         
@@ -37,6 +48,22 @@ namespace PlayerStateMachine {
 
         public override void Motion() {
             //Standing doesnt have motion nor any other effects to happen during it :)
+            if (Inputs.Dash.WasPressedThisFrame())
+            {
+
+                var results = Physics2D.OverlapCircleAll(player.transform.position, 6);
+                foreach (var r in results) { 
+                    var rb = r.GetComponent<Rigidbody2D>();
+                    if (rb != null && rb.bodyType == RigidbodyType2D.Dynamic)
+                    {
+                        Vector2 direction = r.transform.position - player.transform.position;
+                        float distance = direction.magnitude;
+                        direction /= distance;
+                        float forcemultiplier = 6 / distance * 10;
+                        rb.AddForce(direction * forcemultiplier);
+                    }
+                }
+            }
         }
 
         public override void StateSwap()
